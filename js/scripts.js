@@ -1,29 +1,29 @@
 // logic for places to see
-function PlacesCollection () {
-  this.places = {};
+function PlaceCollection () {
+  this.place = {};
   this.currentId = 0
 }
 
-PlacesCollection.prototype.addPlace = function(places) {
-  places.id = this.assignId();
-  this.places[places.id] = places;
+PlaceCollection.prototype.addPlace = function(place) {
+  place.id = this.assignId();
+  this.place[place.id] = place;
 }
 
-PlacesCollection.prototype.assignId = function() {
+PlaceCollection.prototype.assignId = function() {
   this.currentId += 1;
   return this.currentId;
 }
 
-PlacesCollection.prototype.findPlace = function(id) {
-  if (this.places[id] !== undefined) {
-    return this.places[id];
+PlaceCollection.prototype.findPlace = function(id) {
+  if (this.place[id] !== undefined) {
+    return this.place[id];
   }
   return false;
 };
 
 // logic for individual places
 
-function placesToSee (locationPlace,landmarkPlace, foodPlace) {
+function placeToSee (locationPlace,landmarkPlace, foodPlace) {
   this.locationPlace = locationPlace;
   this.landmarkPlace = landmarkPlace;
   this.foodPlace = foodPlace;
@@ -31,19 +31,33 @@ function placesToSee (locationPlace,landmarkPlace, foodPlace) {
 
 // UI
 
-let placesCollect = new PlacesCollection();
+let placeCollect = new PlaceCollection();
 
-function listContacts(placesCollectDisplay) {
-  let placesDiv = document.querySelector("div#place1");
-  placesDiv.innerText =  null;
+function listPlace(placeCollectDisplay) {
+  let placeDiv = document.querySelector("div#place1");
+  placeDiv.innerText =  null;
   const ul = document.createElement("ul");
-  Object.keys(placesCollectDisplay.places).forEach(function(key) {
-    const contact = placesCollectDisplay.findContact(key);
+  Object.keys(placeCollectDisplay.place).forEach(function(key) {
+    const place = placeCollectDisplay.findPlace(key);
     const li = document.createElement("li");
-    li.append(places);
-    li.setAttribute("id", places.id);
+    li.append(place);
+    li.setAttribute("id", place.id);
     ul.append(li);
   });
-  placesDiv.append(ul);
+  placeDiv.append(ul);
 };
+
+function formSubmission(event) {
+  event.preventDefault();
+  const inputPlace = document.querySelector("input#placeName").value;
+  const inputLandmark = document.querySelector("input#newLand").value;
+  const inputFood = document.querySelector("input#newFood").value;
+  let nuPlace = new placeToSee(inputPlace, inputLandmark, inputFood);
+  placeCollect.addPlace(nuPlace);
+  listPlace(placeCollect);
+};
+
+window.addEventListener("load", function (){
+  document.querySelector("form#new-location").addEventListener("submit", formSubmission);
+});
 //hello
