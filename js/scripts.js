@@ -29,3 +29,20 @@ function placesToSee (locationPlace,landmarkPlace, foodPlace) {
   this.foodPlace = foodPlace;
 }
 
+// UI
+
+let placesCollect = new PlacesCollection();
+
+function listContacts(placesCollectDisplay) {
+  let placesDiv = document.querySelector("div#place1");
+  placesDiv.innerText =  null;
+  const ul = document.createElement("ul");
+  Object.keys(placesCollectDisplay.places).forEach(function(key) {
+    const contact = placesCollectDisplay.findContact(key);
+    const li = document.createElement("li");
+    li.append(places);
+    li.setAttribute("id", places.id);
+    ul.append(li);
+  });
+  placesDiv.append(ul);
+};
